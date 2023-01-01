@@ -20,7 +20,9 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/course/{id}', [CourseController::class, 'show'])->name('course');
 Route::get('/courses', [CourseController::class, 'index'])->name('courses');
-Route::get('/topics/{slug}', [TopicController::class, 'index'])->name('topics');
+// Route::get('/topics/{slug}', [TopicController::class, 'index'])->name('topics');
+Route::get('/{archive_type}/{slug}', [HomeController::class, 'archive'])->name('archive');
+Route::get('/courses', [CourseController::class, 'courses'])->name('courses');
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
