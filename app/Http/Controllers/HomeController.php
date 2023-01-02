@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Series;
 use App\Models\Course;
+use App\Models\Topic;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
@@ -54,6 +55,13 @@ class HomeController extends Controller
             }
             $title = 'Courses with duration '.$item;
             $courses = Course::where('duration',$duration_db_key)->paginate(12);
+        }elseif($archive_type === 'topic'){
+            $item = Topic::where('slug',$slug)->first();
+            if(empty($item)){
+                return abort(404);
+            }
+            $title = 'Courses on '.$item->name;
+            $courses = $item->courses()->paginate(12);
         }
 
         return view('archive.single',[

@@ -17,7 +17,8 @@ class CourseController extends Controller
     }
     public function courses(Request $request){
         $search = $request->search;
-        $level = $request->level;
+        $levels = $request->level;
+        // dd($levels);
         // if(!empty($search)){
         //     $courses = Course::where('name','like','%'.$request->search.'%')->paginate(12);
         // }else{
@@ -27,15 +28,36 @@ class CourseController extends Controller
             if(!empty($search)){
                 $query->where('name','like','%'.$search.'%');
             }
-        })->when($level, function ($query) use ($level) {
-            if($level == 'beginner'){
-                $field = 0;
-            }elseif($level == 'intermediate'){
-                $field = 1;
-            }else{
-                $field = 2;
+        })->when($levels, function ($query) use ($levels) {
+            $condition_check = 0;
+            foreach($levels as $level){
+                if($level == 'beginner'){
+                    $field = 0;
+                    if($condition_check>0){
+                        $query->orWhere('difficulty_level',$field);
+                    }else{
+                        $query->where('difficulty_level',$field);
+                    }
+                    $condition_check++;
+                }elseif($level == 'intermediate'){
+                    $field = 1;
+                    if($condition_check>0){
+                        $query->orWhere('difficulty_level',$field);
+                    }else{
+                        $query->where('difficulty_level',$field);
+                    }
+                    $condition_check++;
+                }else{
+                    $field = 2;
+                    if($condition_check>0){
+                        $query->orWhere('difficulty_level',$field);
+                    }else{
+                        $query->where('difficulty_level',$field);
+                    }
+                    $condition_check++;
+                }
             }
-            $query->where('difficulty_level',$field);
+            // $query->where('difficulty_level',$field);
         })->paginate(12);
 
         return view('courses',compact('courses'));

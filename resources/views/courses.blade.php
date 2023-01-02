@@ -76,20 +76,21 @@
                     </button>
                   </h3>
                   <!-- Filter section, show/hide based on section state. -->
+
                   <div class="pt-6">
                     <div class="space-y-2">
                       <div class="flex items-center">
-                        <input name="level" @if(array_key_exists('level',$_GET) && $_GET['level']=='beginner') checked @endif id="filter-level-beginner" value="beginner" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 form-submit">
+                        <input name="level[]" @if(array_key_exists('level',$_GET) && in_array('beginner',$_GET['level'])) checked @endif id="filter-level-beginner" value="beginner" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 form-submit">
                         <label for="filter-level-beginner" class="ml-3 text-sm text-gray-600"> Beginner <span class="text-xs text-gray-500">(10)</span>
                         </label>
                       </div>
                       <div class="flex items-center">
-                        <input name="level" @if(array_key_exists('level',$_GET) && $_GET['level']=='intermediate') checked @endif id="filter-level-intermediate" value="intermediate" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500  form-submit">
+                        <input name="level[]" @if(array_key_exists('level',$_GET) && in_array('intermediate',$_GET['level'])) checked @endif id="filter-level-intermediate" value="intermediate" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500  form-submit">
                         <label for="filter-level-intermediate" class="ml-3 text-sm text-gray-600"> Intermediate <span class="text-xs text-gray-500">(11)</span>
                         </label>
                       </div>
                       <div class="flex items-center">
-                        <input name="level" @if(array_key_exists('level',$_GET) && $_GET['level']=='advanced') checked @endif id="filter-level-advanced" value="advanced" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 form-submit">
+                        <input name="level[]" @if(array_key_exists('level',$_GET) && in_array('advanced',$_GET['level'])) checked @endif id="filter-level-advanced" value="advanced" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 form-submit">
                         <label for="filter-level-advanced" class="ml-3 text-sm text-gray-600"> Advanced <span class="text-xs text-gray-500">(2)</span>
                         </label>
                       </div>
@@ -357,7 +358,7 @@
 
                 </ul>
                 <div class="mt-5">
-                  {{$courses->links()}}
+                  {{$courses->appends($_GET)->links()}}
                 </div>
               </div>
             </div>
